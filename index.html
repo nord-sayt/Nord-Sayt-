@@ -2,242 +2,63 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Nord</title>
-<style>
-body {
-    margin:0;
-    font-family:tahoma;
-    background:#050510;
-    color:white;
-}
-
-/* header */
-header {
-    background:linear-gradient(90deg,#0f0c29,#302b63,#24243e);
-    padding:15px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 0 20px #00f2ff;
-}
-
-header h1 {
-    color:#00f2ff;
-    text-shadow:0 0 10px #00f2ff;
-}
-
-button {
-    background:#00f2ff;
-    border:none;
-    padding:10px 15px;
-    margin:5px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:bold;
-    box-shadow:0 0 10px #00f2ff;
-}
-
-button:hover {
-    background:#00ffaa;
-}
-
-/* container */
-.container {
-    padding:20px;
-}
-
-.card {
-    background:#0d0d1a;
-    padding:15px;
-    margin:10px 0;
-    border-radius:15px;
-    box-shadow:0 0 15px #00f2ff33;
-}
-
-input, textarea {
-    width:100%;
-    padding:10px;
-    margin:5px 0;
-    border-radius:10px;
-    border:none;
-}
-
-/* neon box */
-.neon {
-    border:1px solid #00f2ff;
-    box-shadow:0 0 10px #00f2ff;
-}
-
-/* hidden */
-.hidden {display:none;}
-</style>
+<title>Nord Pro</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <header>
-    <h1>⚡ Nord Server</h1>
-    <div>
-        <button onclick="show('home')">خانه</button>
-        <button onclick="show('login')">ورود</button>
-        <button onclick="show('profile')">پروفایل</button>
-        <button onclick="show('owner')">اونر</button>
-    </div>
+  <h1>⚡ Nord Pro</h1>
+  <nav>
+    <button onclick="show('home')">خانه</button>
+    <button onclick="show('login')">ورود</button>
+    <button onclick="show('profile')">پروفایل</button>
+    <button onclick="show('owner')">اونر</button>
+  </nav>
 </header>
 
-<div class="container">
+<main>
 
-<!-- HOME -->
-<div id="home">
-    <div class="card neon">
-        <h2>📢 اعلامیه ها</h2>
-        <div id="announcements"></div>
-    </div>
+<section id="home">
+  <h2>📢 اعلامیه‌ها</h2>
+  <div id="announcements"></div>
 
-    <div class="card">
-        <h2>📡 اطلاعات سرور</h2>
-        <p>IP: <span id="serverIP">Not Set</span></p>
-        <p>کانال بله: <span id="bale">Not Set</span></p>
-    </div>
+  <h2>📡 سرور</h2>
+  <p>IP: <span id="ip"></span></p>
+  <p>بله: <span id="bale"></span></p>
+</section>
 
-    <div class="card">
-        <h2>📥 دانلود</h2>
-        <input id="search" placeholder="جستجو..." onkeyup="searchDownload()">
-        <div id="downloads">
-            <p>مود، پلاگین، فایل ها اینجا قرار میگیرن...</p>
-        </div>
-    </div>
-</div>
+<section id="login" class="hidden">
+  <h2>ورود / ثبت نام</h2>
+  <input id="user" placeholder="یوزرنیم">
+  <input id="pass" type="password" placeholder="پسورد">
+  <button onclick="register()">ثبت نام</button>
+  <button onclick="login()">ورود</button>
+</section>
 
-<!-- LOGIN -->
-<div id="login" class="hidden">
-    <div class="card">
-        <h2>ورود / ثبت نام</h2>
-        <input id="user" placeholder="یوزرنیم">
-        <input id="pass" type="password" placeholder="پسورد">
-        <button onclick="register()">ثبت نام</button>
-        <button onclick="login()">ورود</button>
-    </div>
-</div>
+<section id="profile" class="hidden">
+  <h2>👤 پروفایل</h2>
+  <p id="me"></p>
+</section>
 
-<!-- PROFILE -->
-<div id="profile" class="hidden">
-    <div class="card">
-        <h2>👤 پروفایل</h2>
-        <p>کاربر: <span id="puser"></span></p>
-        <button onclick="logout()">خروج</button>
-    </div>
-</div>
+<section id="owner" class="hidden">
+  <h2>👑 پنل اونر</h2>
 
-<!-- OWNER -->
-<div id="owner" class="hidden">
-    <div class="card">
-        <h2>👑 پنل اونر</h2>
+  <textarea id="annText"></textarea>
+  <button onclick="addAnn()">ثبت اعلامیه</button>
 
-        <textarea id="announceText" placeholder="اعلامیه جدید"></textarea>
-        <button onclick="addAnnouncement()">ثبت اعلامیه</button>
+  <input id="ipInput" placeholder="IP سرور">
+  <input id="baleInput" placeholder="کانال بله">
+  <button onclick="saveSettings()">ذخیره</button>
 
-        <hr>
+  <h3>👥 تیم 5 نفره</h3>
+  <input id="t1"><input id="t2"><input id="t3"><input id="t4"><input id="t5">
+  <button onclick="saveTeam()">ذخیره تیم</button>
+</section>
 
-        <input id="ipInput" placeholder="IP سرور">
-        <input id="baleInput" placeholder="آیدی کانال بله">
-        <button onclick="saveSettings()">ذخیره تنظیمات</button>
+</main>
 
-        <hr>
-
-        <h3>👥 تیم (5 نفر)</h3>
-        <input id="t1"><input id="t2"><input id="t3"><input id="t4"><input id="t5">
-        <button onclick="saveTeam()">ذخیره تیم</button>
-    </div>
-</div>
-
-</div>
-
-<script>
-let owner = "mohammadamin";
-let currentUser = localStorage.getItem("user");
-
-function show(id){
-    document.querySelectorAll(".container > div").forEach(d=>d.classList.add("hidden"));
-    document.getElementById(id).classList.remove("hidden");
-    if(id=="home") loadHome();
-    if(id=="profile") loadProfile();
-    if(id=="owner") checkOwner();
-}
-
-function register(){
-    let u = user.value;
-    localStorage.setItem("user", u);
-    localStorage.setItem("pass", pass.value);
-    currentUser = u;
-    alert("ثبت شد");
-}
-
-function login(){
-    let u = user.value;
-    let p = pass.value;
-    if(localStorage.getItem("user")==u && localStorage.getItem("pass")==p){
-        currentUser = u;
-        alert("وارد شدی");
-    } else alert("اشتباه");
-}
-
-function logout(){
-    currentUser = null;
-    alert("خارج شدی");
-}
-
-function loadProfile(){
-    document.getElementById("puser").innerText = currentUser || "مهمان";
-}
-
-function checkOwner(){
-    if(currentUser !== owner){
-        alert("دسترسی نداری");
-        show("home");
-    } else {
-        loadSettings();
-    }
-}
-
-function addAnnouncement(){
-    let arr = JSON.parse(localStorage.getItem("ann")||"[]");
-    arr.push(announceText.value);
-    localStorage.setItem("ann", JSON.stringify(arr));
-    alert("ثبت شد");
-}
-
-function loadHome(){
-    let arr = JSON.parse(localStorage.getItem("ann")||"[]");
-    announcements.innerHTML = arr.map(a=>`<p>📢 ${a}</p>`).join("");
-
-    serverIP.innerText = localStorage.getItem("ip") || "Not Set";
-    bale.innerText = localStorage.getItem("bale") || "Not Set";
-}
-
-function saveSettings(){
-    localStorage.setItem("ip", ipInput.value);
-    localStorage.setItem("bale", baleInput.value);
-    alert("ذخیره شد");
-}
-
-function loadSettings(){
-    ipInput.value = localStorage.getItem("ip")||"";
-    baleInput.value = localStorage.getItem("bale")||"";
-}
-
-function saveTeam(){
-    let team = [t1.value,t2.value,t3.value,t4.value,t5.value];
-    localStorage.setItem("team", JSON.stringify(team));
-    alert("تیم ذخیره شد");
-}
-
-function searchDownload(){
-    downloads.innerHTML = "نتیجه: " + search.value;
-}
-
-loadHome();
-</script>
-
+<script src="app.js"></script>
+<script src="admin.js"></script>
 </body>
 </html>
